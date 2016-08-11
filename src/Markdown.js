@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
-import { View } from 'react-native';
-import { Parser } from 'commonmark';
-import ReactRenderer from 'commonmark-react-renderer';
-import renderers from './renderers';
+import React, { Component, PropTypes } from 'react'
+import { View } from 'react-native'
+import { Parser } from 'commonmark'
+import ReactRenderer from 'commonmark-react-renderer'
+import renderers from './renderers'
+import _ from 'lodash'
 
-var parser = new Parser();
+var parser = new Parser()
 
 export default class Markdown extends Component {
   static propTypes = {
@@ -24,34 +25,34 @@ export default class Markdown extends Component {
     transformLinkUri: PropTypes.func,
     unwrapDisallowed: PropTypes.bool,
     renderers: PropTypes.object,
-    walker: PropTypes.func
-  };
+    walker: PropTypes.func,
+  }
 
   static defaultProps = {
     containerComponent: View,
-    renderers
-  };
-
-  static types = ReactRenderer.types;
-  static renderers = ReactRenderer.renderers;
-  static uriTransformer = ReactRenderer.uriTransformer;
+    renderers: {}
+  }
 
   render() {
-    const containerProps = this.props.containerProps || {};
-    const renderer = new ReactRenderer(this.props);
-    const ast = parser.parse(this.props.source || '');
+
+    // use default renderers overriden by this.props.renderers (default {})
+    _.merge(this.props.renderers, renderers, _.cloneDeep(this.props.renderers))
+
+    const containerProps = this.props.containerProps || {}
+    const renderer = new ReactRenderer(this.props)
+    const ast = parser.parse(this.props.source || '')
 
     if (this.props.walker) {
-      const walker = ast.walker();
-      let event;
+      const walker = ast.walker()
+      let event
 
       while ((event = walker.next())) {
-        this.props.walker.call(this, event, walker);
+        this.props.walker.call(this, event, walker)
       }
     }
 
     if (this.props.style) {
-      containerProps.style = this.props.style;
+      containerProps.style = this.props.style
     }
 
     return React.createElement.apply(
@@ -62,6 +63,6 @@ export default class Markdown extends Component {
             .render(ast)
             .concat([this.props.childAfter])
         )
-    );
+    )
   }
 }
