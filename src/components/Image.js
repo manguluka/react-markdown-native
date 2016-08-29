@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { Image } from 'react-native';
 
-export default class ImageComponent extends Component {
+class ImageComponent extends Component {
   static propTypes = {
     src: PropTypes.string.isRequired
   };

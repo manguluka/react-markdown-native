@@ -7,7 +7,7 @@ import _ from 'lodash'
 
 var parser = new Parser()
 
-export default class Markdown extends Component {
+class Markdown extends Component {
   static propTypes = {
     style: View.propTypes.style,
     containerProps: PropTypes.object,
@@ -66,3 +66,5 @@ export default class Markdown extends Component {
     )
   }
 }
+
+export default Markdown

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Linking, View, Text, TouchableOpacity } from 'react-native';
 
-export default class Link extends Component {
+class Link extends Component {
   static propTypes = {
     href: PropTypes.string
   };
@@ -24,3 +24,5 @@ export default class Link extends Component {
     return <Text onPress={this.handleClick}>{children}</Text>;
   }
 }
+
+export default Link

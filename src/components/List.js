@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View } from 'react-native';
 
-export default class List extends Component {
+class List extends Component {
   static childContextTypes = {
     type: React.PropTypes.string
   };
@@ -18,3 +18,5 @@ export default class List extends Component {
     return <View>{children}</View>;
   }
 }
+
+export default List
